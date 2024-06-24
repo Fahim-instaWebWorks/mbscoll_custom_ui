@@ -164,12 +164,16 @@ const TaskScheduler = () => {
   const handleEventCreated = useCallback(
     (args) => {
       console.log(args);
+      const dateStr1 = args.event.start
+      const startDate = new Date(dateStr1).toISOString();
+      const dateStr2 = args.event.start
+      const endDate = new Date(dateStr2).toISOString();
       setIsNewEvent(true);
       showPopup(args);
       setNewEvent(prevEvent => ({
         ...prevEvent,
-        start: args.event.start,
-        end: args.event.end
+        start: startDate,
+        end: endDate
       }))
     },
     [showPopup]
@@ -177,7 +181,7 @@ const TaskScheduler = () => {
 
   const popupClose = useCallback(() => {
     if (isNewEvent) {
-      // setEvents(myEvents.filter((item) => item.id !== tempEvent.id));
+      setEvents(myEvents.filter((item) => item.id !== tempEvent.id));
     }
     setOpen(false);
   }, [isNewEvent, myEvents, tempEvent]);
