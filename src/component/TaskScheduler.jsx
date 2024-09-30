@@ -20,6 +20,8 @@ import PropTypes from "prop-types";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import "@mobiscroll/react/dist/css/mobiscroll.min.css";
 import "./test.css";
+import EventForm from "./formComponent/EventForm";
+import { Modal } from "@mui/material";
 
 setOptions({
   theme: "ios",
@@ -463,10 +465,14 @@ const TaskScheduler = () => {
     }
   }, [myEvents]);
 
+  const onClose = ()=>{
+    setOpen(false)
+  }
+
   return (
     <div className="mbsc-grid mbsc-no-padding">
       <div className="mbsc-row">
-        <div className="mbsc-col-sm-12 docs-appointment-calendar">
+        <div className="mbsc-col-sm-10 docs-appointment-calendar">
           <Eventcalendar
             data={myEvents}
             view={myView}
@@ -479,6 +485,7 @@ const TaskScheduler = () => {
             externalDrag={true}
             height={'500px'}
             colors={myColors}
+            onCellDoubleClick={()=>setOpen(true)}
             renderHeader={customWithNavButtons}
             onEventCreate={handleEventCreate}
             onEventCreated={handleEventCreated}
@@ -495,7 +502,7 @@ const TaskScheduler = () => {
           />
         </div>
         <div
-          className="mbsc-col-sm-12 docs-appointment-cont"
+          className="mbsc-col-sm-2 docs-appointment-cont"
           //   ref={setDropElm}
           style={{ backgroundColor: contBg }}
         >
@@ -523,8 +530,16 @@ const TaskScheduler = () => {
             // showOnClick={false}
           />
         </div>
-        <Popup
-          display="anchored"
+        <Modal
+        open={open}
+        onClose={onClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <EventForm />
+      </Modal>
+        {/* <Popup
+          display="center"
           width={400}
           contentPadding={false}
           touchUi={false}
@@ -532,9 +547,11 @@ const TaskScheduler = () => {
           buttons={['ok']}
           // anchor={anchor}
           isOpen={open}
-          // onClose={onClose}
+          onClose={onClose}
         >
-          <div className="mbsc-form-group">
+          <EventForm />
+        </Popup> */}
+          {/* <div className="mbsc-form-group">
             <Input label="Task" defaultValue={'title'} readOnly></Input>
             <Textarea label="Details" defaultValue={'details'} placeholder="Add description..."></Textarea>
             <Select
@@ -546,8 +563,7 @@ const TaskScheduler = () => {
               label="Technician"
               placeholder="Please select..."
             />
-          </div>
-        </Popup>
+          </div> */}
       </div>
     </div>
   );
