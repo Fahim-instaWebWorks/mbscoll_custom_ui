@@ -440,7 +440,7 @@ const TaskScheduler = () => {
   }, []);
 
   const customWithNavButtons = useCallback(() => {
-    const props = { placeholder: "Please Select..." };
+    const props = { placeholder: "Select date...",inputStyle:'box' };
     const show = () => {
       setOpenPicker(true);
     };
@@ -462,22 +462,19 @@ const TaskScheduler = () => {
         <CalendarNext className="cal-header-next" />
 
         <Datepicker
-          controls={["calendar"]}
-          calendarType="month"
-          display="bottom"
-          calendarScroll={"vertical"}
-          pages={3}
-          touchUi={true}
-          inputComponent="input"
-          inputProps={props}
-          // maxHeight={"400px"}
-          // maxWidth={"1000px"}
-          isOpen={openPicker}
-          onClose={handleClose}
-          showOnFocus={true}
-          showOnClick={true}
-        />
-        <Button onClick={show}>Show picker</Button>
+            controls={["calendar"]}
+            calendarType="month"
+            display="top"
+            calendarScroll={"vertical"}
+            pages={3}
+            className="mbsc-textfield"
+            inputProps={props}
+            // maxHeight={"400px"}
+            // maxWidth={"1000px"}
+            // isOpen={true}
+            // showOnFocus={false}
+            // showOnClick={false}
+          />
       </>
     );
   }, [changeView, view]);
@@ -499,7 +496,7 @@ const TaskScheduler = () => {
   return (
     <div className="mbsc-grid mbsc-no-padding">
       <div className="mbsc-row">
-        <div className="mbsc-col-sm-10 docs-appointment-calendar">
+        <div className="mbsc-col-sm-12 docs-appointment-calendar">
           <Eventcalendar
             data={myEvents}
             view={myView}
@@ -528,12 +525,12 @@ const TaskScheduler = () => {
             onClose={handleCloseToast}
           />
         </div>
-        <div
-          className="mbsc-col-sm-2 docs-appointment-cont"
+        {/* <div
+          className="mbsc-col-sm-0 docs-appointment-cont"
           //   ref={setDropElm}
           style={{ backgroundColor: contBg }}
         >
-          {/* <Dropcontainer
+          <Dropcontainer
             onItemDrop={handleItemDrop}
             onItemDragEnter={handleItemDragEnter}
             onItemDragLeave={handleItemDragLeave}
@@ -543,7 +540,7 @@ const TaskScheduler = () => {
             {appointments.map((app) => (
               <Appointment key={app.id} data={app} />
             ))}
-          </Dropcontainer> */}
+          </Dropcontainer>
           <Datepicker
             controls={["calendar"]}
             calendarType="month"
@@ -556,7 +553,7 @@ const TaskScheduler = () => {
             // showOnFocus={false}
             // showOnClick={false}
           />
-        </div>
+        </div> */}
         <Modal
           open={open}
           onClose={onClose}
