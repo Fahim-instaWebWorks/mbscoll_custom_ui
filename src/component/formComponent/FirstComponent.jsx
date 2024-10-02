@@ -12,14 +12,36 @@ import {
 } from "@mui/material";
 import React from "react";
 import CustomTextField from "../atom/CustomTextField";
+import { useState } from "react";
 
-const FirstComponent = () => {
+const FirstComponent = ({ formData, handleInputChange }) => {
+  const [activityType, setActivityType] = useState([
+    "Meeting",
+    "Todo",
+    "Appointment",
+    "Boardroom",
+    "Call Billing",
+    "Email Billing",
+    "Initial Consultation",
+    "Call",
+    "Mail",
+    "Meeting Billing",
+    "Personal Activity",
+    "Room 1",
+    "Room 2",
+    "Room 3",
+    "Todo Billing",
+    "Vacation",
+  ]);
   return (
     <Box>
       <Grid container spacing={2} sx={{ mt: 2 }}>
         <Grid size={12}>
           <FormControl fullWidth size="small">
-            <InputLabel id="demo-simple-select-standard-label" sx={{top:'-5px'}}>
+            <InputLabel
+              id="demo-simple-select-standard-label"
+              sx={{ top: "-5px" }}
+            >
               Activity type
             </InputLabel>
             <Select
@@ -27,6 +49,10 @@ const FirstComponent = () => {
               id="demo-simple-select-standard"
               label="Activity type"
               fullWidth
+              value={formData.title}
+              onChange={(e) =>
+                handleInputChange("title", e.target.value)
+              }
               MenuProps={{
                 //   disablePortal: true,  // This ensures the dropdown is not restricted to the modal's container
                 PaperProps: {
@@ -49,12 +75,17 @@ const FirstComponent = () => {
                 },
               }}
             >
-              <MenuItem value="">
+              {activityType.map((item, index) => (
+                <MenuItem value={item} key={index}>
+                  {item}
+                </MenuItem>
+              ))}
+              {/* <MenuItem value="">
                 <em>None</em>
               </MenuItem>
-              <MenuItem value={10}>Ten</MenuItem>
+              
               <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
+              <MenuItem value={30}>Thirty</MenuItem> */}
             </Select>
           </FormControl>
         </Grid>
@@ -64,6 +95,8 @@ const FirstComponent = () => {
             size="small"
             placeholder="Start Time"
             variant="outlined"
+            value={formData.startTime}
+            onChange={(e) => handleInputChange("startTime", e.target.value)}
           />
         </Grid>
         <Grid size={4}>
@@ -72,11 +105,16 @@ const FirstComponent = () => {
             size="small"
             placeholder="End Time"
             variant="outlined"
+            value={formData.endTime}
+            onChange={(e) => handleInputChange("endTime", e.target.value)}
           />
         </Grid>
         <Grid size={4}>
           <FormControl fullWidth size="small">
-            <InputLabel id="demo-simple-select-standard-label" sx={{top:'-5px'}}>
+            <InputLabel
+              id="demo-simple-select-standard-label"
+              sx={{ top: "-5px" }}
+            >
               Duration
             </InputLabel>
             <Select
@@ -84,6 +122,8 @@ const FirstComponent = () => {
               id="demo-simple-select-standard"
               label="Duration"
               fullWidth
+              value={formData.duration}
+              onChange={(e) => handleInputChange("duration", e.target.value)}
               sx={{
                 "& .MuiSelect-select": {
                   padding: "3px 10px", // Adjust the padding to shrink the Select content
@@ -110,6 +150,8 @@ const FirstComponent = () => {
             size="small"
             placeholder="Associate with"
             variant="outlined"
+            value={formData.associateWith}
+            onChange={(e) => handleInputChange("associateWith", e.target.value)}
           />
         </Grid>
         <Grid size={12}>
@@ -118,14 +160,19 @@ const FirstComponent = () => {
             size="small"
             placeholder="Regarding"
             variant="outlined"
+            value={formData.regarding}
+            onChange={(e) => handleInputChange("regarding", e.target.value)}
           />
         </Grid>
         <Grid size={6}>
           <CustomTextField
             fullWidth
             size="small"
+            type="number"
             placeholder="Resources"
             variant="outlined"
+            value={formData.resources}
+            onChange={(e) => handleInputChange("resource", e.target.value)}
           />
         </Grid>
         <Grid size={6}>
@@ -134,15 +181,15 @@ const FirstComponent = () => {
             size="small"
             placeholder="Location"
             variant="outlined"
+            value={formData.location}
+            onChange={(e) => handleInputChange("location", e.target.value)}
           />
         </Grid>
         <Grid size={4}>
           <FormControl fullWidth size="small" sx={{ minHeight: "20px" }}>
             <InputLabel
               id="demo-simple-select-standard-label"
-              sx={{
-                top: "-5px", // Adjust the vertical position of the label
-              }}
+              sx={{ top: "-5px" }}
             >
               Priority
             </InputLabel>
@@ -151,6 +198,8 @@ const FirstComponent = () => {
               id="demo-simple-select-standard"
               label="Priority"
               fullWidth
+              value={formData.priority}
+              onChange={(e) => handleInputChange("priority", e.target.value)}
               sx={{
                 "& .MuiSelect-select": {
                   padding: "3px 10px", // Adjust the padding to shrink the Select content
@@ -173,7 +222,10 @@ const FirstComponent = () => {
         </Grid>
         <Grid size={4}>
           <FormControl fullWidth size="small">
-            <InputLabel id="demo-simple-select-standard-label" sx={{top:'-5px'}}>
+            <InputLabel
+              id="demo-simple-select-standard-label"
+              sx={{ top: "-5px" }}
+            >
               Ring Alarm
             </InputLabel>
             <Select
@@ -181,6 +233,8 @@ const FirstComponent = () => {
               id="demo-simple-select-standard"
               label="Ring Alarm"
               fullWidth
+              value={formData.ringAlarm}
+              onChange={(e) => handleInputChange("ringAlarm", e.target.value)}
               sx={{
                 "& .MuiSelect-select": {
                   padding: "3px 10px", // Adjust the padding to shrink the Select content
@@ -205,7 +259,7 @@ const FirstComponent = () => {
           <Button
             variant="contained"
             size="small"
-            sx={{  bgcolor: "gray" }}
+            sx={{ bgcolor: "gray" }}
             fullWidth
           >
             {" "}

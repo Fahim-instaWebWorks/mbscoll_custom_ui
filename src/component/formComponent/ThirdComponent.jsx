@@ -12,7 +12,7 @@ import {
 import React from "react";
 import CustomTextField from "../atom/CustomTextField";
 
-const ThirdComponent = () => {
+const ThirdComponent = ({ formData, handleInputChange }) => {
   return (
     <Box>
       <FormControl>
@@ -21,6 +21,8 @@ const ThirdComponent = () => {
           aria-labelledby="demo-radio-buttons-group-label"
           defaultValue="once"
           name="radio-buttons-group"
+          value={formData.gender}
+          onChange={(e) => handleInputChange("gender", e.target.value)}
         >
           <FormControlLabel
             value="once"
@@ -61,22 +63,30 @@ const ThirdComponent = () => {
               size="small"
               label=""
               variant="outlined"
+              value={formData.starts}
+              onChange={(e) => handleInputChange("start", e.target.value)}
             />
           </Box>
         </Grid>
         <Grid size={6}>
-        <Box display="flex" alignItems="center">
+          <Box display="flex" alignItems="center">
             <Typography variant="body1" sx={{ minWidth: "80px" }}>
               Ends :
             </Typography>
-            <CustomTextField fullWidth size="small" label="" variant="outlined" />
+            <CustomTextField
+              fullWidth
+              size="small"
+              label=""
+              variant="outlined"
+              value={formData.ends}
+              onChange={(e) => handleInputChange("end", e.target.value)}
+            />
           </Box>
           <FormControlLabel
             value="no end date"
             control={<Radio size="small" />}
             label="No end date"
           />
-          
         </Grid>
       </Grid>
     </Box>

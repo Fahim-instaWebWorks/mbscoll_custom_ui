@@ -1,4 +1,5 @@
 import {
+  Button,
   CalendarNav,
   CalendarNext,
   CalendarPrev,
@@ -21,7 +22,8 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import "@mobiscroll/react/dist/css/mobiscroll.min.css";
 import "./test.css";
 import EventForm from "./formComponent/EventForm";
-import { Modal } from "@mui/material";
+import { Box,  IconButton, Modal } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 
 setOptions({
   theme: "ios",
@@ -72,78 +74,80 @@ Appointment.propTypes = {
 const TaskScheduler = () => {
   const [myEvents, setEvents] = useState([
     {
-      id: 'job1',
-      start: '2024-09-28T14:00',
-      end: '2024-09-28T16:00',
+      id: "job1",
+      start: "2024-10-02T14:00",
+      end: "2024-10-02T16:00",
       resource: 1,
-      title: 'Myla Bennett',
-      job: 'Wisdom tooth removal',
-      color: '#334ab9',
+      title: "Myla Bennett",
+      job: "Wisdom tooth removal",
+      color: "#334ab9",
     },
     {
-      id: 'job2',
-      start: '2024-09-28T17:00',
-      end: '2024-09-28T18:30',
+      id: "job2",
+      start: "2024-10-02T17:00",
+      end: "2024-10-02T18:30",
       resource: 1,
-      title: 'Beatrix Foley',
-      job: 'Braces',
-      color: '#177e70',
+      title: "Beatrix Foley",
+      job: "Braces",
+      color: "#177e70",
     },
     {
-      id: 'job3',
-      start: '2024-09-28T08:00',
-      end: '2024-09-28T09:30',
+      id: "job3",
+      start: "2024-10-02T08:00",
+      end: "2024-10-02T09:30",
       resource: 3,
-      title: 'Frank Watson',
-      job: 'Teeth whitening',
-      color: '#d1891f',
+      title: "Frank Watson",
+      job: "Teeth whitening",
+      color: "#d1891f",
     },
     {
-      id: 'job4',
-      start: '2024-09-28T10:00',
-      end: '2024-09-28T12:30',
+      id: "job4",
+      start: "2024-10-02T10:00",
+      end: "2024-10-02T12:30",
       resource: 3,
-      title: 'Jaime Joyce',
-      job: 'Root canal treatment',
-      color: '#cb3939',
+      title: "Jaime Joyce",
+      job: "Root canal treatment",
+      color: "#cb3939",
     },
     {
-      id: 'job5',
-      start: '2024-09-28T13:00',
-      end: '2024-09-28T14:00',
+      id: "job5",
+      start: "2024-10-02T13:00",
+      end: "2024-10-02T14:00",
       resource: 3,
-      title: 'Corey Shepard',
-      job: 'Tooth extraction',
-      color: '#aba343',
+      title: "Corey Shepard",
+      job: "Tooth extraction",
+      color: "#aba343",
     },
     {
-      id: 'job6',
-      start: '2024-09-28T14:00',
-      end: '2024-09-28T16:00',
+      id: "job6",
+      start: "2024-10-02T14:00",
+      end: "2024-10-02T16:00",
       resource: 4,
-      title: 'Callie Leonard',
-      job: 'Crown and bridge',
-      color: '#1ca11a',
+      title: "Callie Leonard",
+      job: "Crown and bridge",
+      color: "#1ca11a",
     },
     {
-      id: 'job7',
-      start: '2024-09-28T17:00',
-      end: '2024-09-28T18:00',
+      id: "job7",
+      start: "2024-10-02T17:00",
+      end: "2024-10-02T18:00",
       resource: 4,
-      title: 'Harley Thomson',
-      job: 'Tartar removal',
-      color: '#a446b5',
+      title: "Harley Thomson",
+      job: "Tartar removal",
+      color: "#a446b5",
     },
     {
-      id: 'job8',
-      start: '2024-09-28T09:00',
-      end: '2024-09-28T11:00',
+      id: "job8",
+      start: "2024-10-02T09:00",
+      end: "2024-10-02T11:00",
       resource: 6,
-      title: 'Ricky Welch',
-      job: 'Wisdom tooth removal',
-      color: '#334ab9',
+      title: "Ricky Welch",
+      job: "Wisdom tooth removal",
+      color: "#334ab9",
     },
   ]);
+
+  console.log({ myEvents });
 
   const [appointments, setAppointments] = useState([
     {
@@ -186,7 +190,8 @@ const TaskScheduler = () => {
 
   const [contBg, setContBg] = useState("");
   const [myColors, setColors] = useState([]);
-  const[open,setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
+  const [openPicker, setOpenPicker] = useState(false);
   const [dropCont, setDropCont] = useState();
   const [toastMessage, setToastMessage] = useState("");
   const [isToastOpen, setToastOpen] = useState(false);
@@ -232,16 +237,16 @@ const TaskScheduler = () => {
           },
         };
         break;
-        case "day":
-          myView = {
-            schedule: {
-              type: "day",
-              allDay: false,
-              startTime: "08:00",
-              endTime: "17:00",
-            },
-          };
-          break;
+      case "day":
+        myView = {
+          schedule: {
+            type: "day",
+            allDay: false,
+            startTime: "08:00",
+            endTime: "17:00",
+          },
+        };
+        break;
       default:
         myView = {
           schedule: {
@@ -327,8 +332,6 @@ const TaskScheduler = () => {
     ],
     []
   );
-
-  
 
   const myInvalid = useMemo(
     () => [
@@ -436,8 +439,15 @@ const TaskScheduler = () => {
     setToastOpen(false);
   }, []);
 
-  const customWithNavButtons = useCallback(
-    () => (
+  const customWithNavButtons = useCallback(() => {
+    const props = { placeholder: "Please Select..." };
+    const show = () => {
+      setOpenPicker(true);
+    };
+    const handleClose = () => {
+      setOpenPicker(false);
+    };
+    return (
       <>
         <CalendarNav className="cal-header-nav" />
         <div className="cal-header-picker">
@@ -450,10 +460,27 @@ const TaskScheduler = () => {
         <CalendarPrev className="cal-header-prev" />
         <CalendarToday className="cal-header-today" />
         <CalendarNext className="cal-header-next" />
+
+        <Datepicker
+          controls={["calendar"]}
+          calendarType="month"
+          display="bottom"
+          calendarScroll={"vertical"}
+          pages={3}
+          touchUi={true}
+          inputComponent="input"
+          inputProps={props}
+          // maxHeight={"400px"}
+          // maxWidth={"1000px"}
+          isOpen={openPicker}
+          onClose={handleClose}
+          showOnFocus={true}
+          showOnClick={true}
+        />
+        <Button onClick={show}>Show picker</Button>
       </>
-    ),
-    [changeView, view]
-  );
+    );
+  }, [changeView, view]);
 
   useEffect(() => {
     for (const event of myEvents) {
@@ -465,9 +492,9 @@ const TaskScheduler = () => {
     }
   }, [myEvents]);
 
-  const onClose = ()=>{
-    setOpen(false)
-  }
+  const onClose = () => {
+    setOpen(false);
+  };
 
   return (
     <div className="mbsc-grid mbsc-no-padding">
@@ -483,9 +510,9 @@ const TaskScheduler = () => {
             eventOverlap={false}
             externalDrop={true}
             externalDrag={true}
-            height={'500px'}
+            // height={"500px"}
             colors={myColors}
-            onCellDoubleClick={()=>setOpen(true)}
+            onCellDoubleClick={() => setOpen(true)}
             renderHeader={customWithNavButtons}
             onEventCreate={handleEventCreate}
             onEventCreated={handleEventCreated}
@@ -523,21 +550,26 @@ const TaskScheduler = () => {
             display="bottom"
             calendarScroll={"vertical"}
             pages={4}
-            maxHeight={'400px'}
-            maxWidth={'1000px'}
+            maxHeight={"400px"}
+            maxWidth={"1000px"}
             // isOpen={true}
             // showOnFocus={false}
             // showOnClick={false}
           />
         </div>
         <Modal
-        open={open}
-        onClose={onClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <EventForm />
-      </Modal>
+          open={open}
+          onClose={onClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <EventForm
+            myEvents={myEvents}
+            setEvents={setEvents}
+            setOpen={setOpen}
+            onClose={onClose}
+          />
+        </Modal>
         {/* <Popup
           display="center"
           width={400}
@@ -551,7 +583,7 @@ const TaskScheduler = () => {
         >
           <EventForm />
         </Popup> */}
-          {/* <div className="mbsc-form-group">
+        {/* <div className="mbsc-form-group">
             <Input label="Task" defaultValue={'title'} readOnly></Input>
             <Textarea label="Details" defaultValue={'details'} placeholder="Add description..."></Textarea>
             <Select

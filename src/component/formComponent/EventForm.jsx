@@ -1,12 +1,15 @@
 import React from "react";
 import "@mobiscroll/react/dist/css/mobiscroll.min.css";
 import { Input, Select, Textarea } from "@mobiscroll/react";
-import { Box, Button, Tab, Tabs, Typography } from "@mui/material";
+import { Box, Button, IconButton, Tab, Tabs, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { useState } from "react";
 import FirstComponent from "./FirstComponent";
 import SecondComponent from "./SecondComponent";
 import ThirdComponent from "./ThirdComponent";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+import CloseIcon from "@mui/icons-material/Close";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -24,9 +27,29 @@ function TabPanel(props) {
   );
 }
 
-const EventForm = () => {
+const EventForm = ({ myEvents,setEvents, setOpen, onClose }) => {
   const theme = useTheme();
   const [value, setValue] = useState(0);
+  const [textvalue, setTextValue] = useState("");
+  const [formData, setFormData] = useState({
+    id:`job${myEvents.length+1}`,
+    title: "",
+    startTime: "",
+    endTime: "",
+    duration: "",
+    associateWith: "",
+    regarding: "",
+    resource: 0,
+    location: "",
+    priority: "",
+    ringAlarm: "",
+    gender: "once",
+    start: "",
+    end: "",
+    noEndDate: false,
+    quillContent: "",
+    color: "#d1891f",
+  });
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -40,6 +63,24 @@ const EventForm = () => {
   const handleBack = () => {
     if (value > 0) setValue(value - 1); // Decrement to previous tab
   };
+
+  const handleInputChange = (field, value) => {
+    if (field === "resources") {
+      value = parseInt(value, 10); // Convert the input to an integer
+    }
+    setFormData((prevState) => ({
+      ...prevState,
+      [field]: value,
+    }));
+  };
+
+  const handleSubmit = () => {
+    console.log("Form Data Submitted:", formData);
+    // Add your submit logic here (e.g., send data to the backend)
+    setEvents((prev) => [...prev, formData]);
+    setOpen(false);
+  };
+
   return (
     <Box
       sx={{
@@ -52,8 +93,25 @@ const EventForm = () => {
         border: "2px solid #000",
         boxShadow: 24,
         p: 2,
+        borderRadius: 5,
       }}
     >
+      <Box height={15}>
+        <IconButton
+          aria-label="close"
+          onClick={() => {
+            onClose;
+            setOpen(false);
+          }}
+          sx={{
+            position: "absolute",
+            right: 8,
+            top: 8,
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
+      </Box>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Tabs
           value={value}
@@ -67,32 +125,75 @@ const EventForm = () => {
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        <FirstComponent />
+        <FirstComponent
+          formData={formData}
+          handleInputChange={handleInputChange}
+        />
         <Box display="flex" justifyContent="space-between" mt={2}>
-          <Button size="small" disabled>Back</Button> {/* Back is disabled on first tab */}
-          <Button size="small" variant="contained" color="primary" onClick={handleNext}>
+          <Button size="small" disabled>
+            Back
+          </Button>{" "}
+          {/* Back is disabled on first tab */}
+          <Button
+            size="small"
+            variant="contained"
+            color="primary"
+            onClick={handleNext}
+          >
             Next
           </Button>
         </Box>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <SecondComponent />
+        {/* <SecondComponent /> */}
+        <ReactQuill
+          theme="snow"
+          style={{ height: 250, marginBottom: 80 }}
+          value={formData.quillContent}
+          onChange={(content) => handleInputChange("quillContent", content)}
+        />
         <Box display="flex" justifyContent="space-between" mt={2}>
-          <Button size="small" variant="contained" color="primary" onClick={handleBack}>
+          <Button
+            size="small"
+            variant="contained"
+            color="primary"
+            onClick={handleBack}
+          >
             Back
           </Button>
-          <Button size="small" variant="contained" color="primary" onClick={handleNext}>
+          <Button
+            size="small"
+            variant="contained"
+            color="primary"
+            onClick={handleNext}
+          >
             Next
           </Button>
         </Box>
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <ThirdComponent />
+        <ThirdComponent
+          formData={formData}
+          handleInputChange={handleInputChange}
+        />
         <Box display="flex" justifyContent="space-between" mt={2}>
-          <Button size="small" variant="contained" color="primary" onClick={handleBack}>
+          <Button
+            size="small"
+            variant="contained"
+            color="primary"
+            onClick={handleBack}
+          >
             Back
           </Button>
-          <Button size="small"  variant="contained" color="secondary">Submit</Button> {/* Next is disabled on the last tab */}
+          <Button
+            size="small"
+            variant="contained"
+            color="secondary"
+            onClick={handleSubmit}
+          >
+            Submit
+          </Button>{" "}
+          {/* Next is disabled on the last tab */}
         </Box>
       </TabPanel>
     </Box>
