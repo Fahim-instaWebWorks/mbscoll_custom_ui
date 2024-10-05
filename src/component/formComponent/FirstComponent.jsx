@@ -33,9 +33,22 @@ const FirstComponent = ({ formData, handleInputChange }) => {
     "Todo Billing",
     "Vacation",
   ]);
+
+  const [associateWith,setAssociateWith] = useState([])
   return (
     <Box>
       <Grid container spacing={2} sx={{ mt: 2 }}>
+      <Grid size={12}>
+          <CustomTextField
+            fullWidth
+            size="small"
+            placeholder="Event_title"
+            variant="outlined"
+            value={formData.Event_title}
+            onChange={(e) => handleInputChange("Event_title", e.target.value)}
+          />
+        </Grid>
+
         <Grid size={12}>
           <FormControl fullWidth size="small">
             <InputLabel
@@ -145,35 +158,143 @@ const FirstComponent = ({ formData, handleInputChange }) => {
           </FormControl>
         </Grid>
         <Grid size={12}>
-          <CustomTextField
+        <FormControl fullWidth size="small">
+            <InputLabel
+              id="demo-simple-select-standard-label"
+              sx={{ top: "-5px" }}
+            >
+              Associate with
+            </InputLabel>
+            <Select
+              labelId="demo-simple-select-standard-label"
+              id="demo-simple-select-standard"
+              label="Associate with"
+              fullWidth
+              value={formData.title}
+              onChange={(e) =>
+                handleInputChange("associateWith", e.target.value)
+              }
+              MenuProps={{
+                //   disablePortal: true,  // This ensures the dropdown is not restricted to the modal's container
+                PaperProps: {
+                  style: {
+                    zIndex: 1300, // Increase this if necessary, depending on the z-index of your popup
+                  },
+                },
+              }}
+              sx={{
+                "& .MuiSelect-select": {
+                  padding: "3px 10px", // Adjust the padding to shrink the Select content
+                },
+                "& .MuiOutlinedInput-root": {
+                  // height: '40px', // Set a consistent height
+                  padding: 0, // Ensure no extra padding
+                },
+                "& .MuiInputBase-input": {
+                  display: "flex",
+                  alignItems: "center", // Align the content vertically
+                },
+              }}
+            >
+              {activityType.map((item, index) => (
+                <MenuItem value={item} key={index}>
+                  {item}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          {/* <CustomTextField
             fullWidth
             size="small"
             placeholder="Associate with"
             variant="outlined"
             value={formData.associateWith}
             onChange={(e) => handleInputChange("associateWith", e.target.value)}
-          />
+          /> */}
         </Grid>
         <Grid size={12}>
-          <CustomTextField
-            fullWidth
-            size="small"
-            placeholder="Regarding"
-            variant="outlined"
-            value={formData.regarding}
-            onChange={(e) => handleInputChange("regarding", e.target.value)}
-          />
+        <FormControl fullWidth size="small">
+            <InputLabel
+              id="demo-simple-select-standard-label"
+              sx={{ top: "-5px" }}
+            >
+              Schedule with
+            </InputLabel>
+            <Select
+              labelId="demo-simple-select-standard-label"
+              id="demo-simple-select-standard"
+              label="Schedule with"
+              fullWidth
+              multiple
+              value={formData.title}
+              onChange={(e) =>
+                handleInputChange("ScheduleWith", e.target.value)
+              }
+              MenuProps={{
+                //   disablePortal: true,  // This ensures the dropdown is not restricted to the modal's container
+                PaperProps: {
+                  style: {
+                    zIndex: 1300, // Increase this if necessary, depending on the z-index of your popup
+                  },
+                },
+              }}
+              sx={{
+                "& .MuiSelect-select": {
+                  padding: "3px 10px", // Adjust the padding to shrink the Select content
+                },
+                "& .MuiOutlinedInput-root": {
+                  // height: '40px', // Set a consistent height
+                  padding: 0, // Ensure no extra padding
+                },
+                "& .MuiInputBase-input": {
+                  display: "flex",
+                  alignItems: "center", // Align the content vertically
+                },
+              }}
+            >
+              {activityType.map((item, index) => (
+                <MenuItem value={item} key={index}>
+                  {item}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
         </Grid>
+        
         <Grid size={6}>
-          <CustomTextField
-            fullWidth
-            size="small"
-            type="number"
-            placeholder="Resources"
-            variant="outlined"
-            value={formData.resources}
-            onChange={(e) => handleInputChange("resource", e.target.value)}
-          />
+          <FormControl fullWidth size="small" sx={{ minHeight: "20px" }}>
+            <InputLabel
+              id="demo-simple-select-standard-label"
+              sx={{ top: "-5px" }}
+            >
+              Schedule for ...
+            </InputLabel>
+            <Select
+              labelId="demo-simple-select-standard-label"
+              id="demo-simple-select-standard"
+              label="Schedule for"
+              fullWidth
+              value={formData.scheduleFor}
+              onChange={(e) => handleInputChange("scheduleFor", e.target.value)}
+              sx={{
+                "& .MuiSelect-select": {
+                  padding: "3px 10px", // Adjust the padding to shrink the Select content
+                },
+                "& .MuiOutlinedInput-root": {
+                  // height: '40px', // Set a consistent height
+                  padding: 0, // Ensure no extra padding
+                },
+                "& .MuiInputBase-input": {
+                  display: "flex",
+                  alignItems: "center", // Align the content vertically
+                },
+              }}
+            >
+              <MenuItem value={10}>Low</MenuItem>
+              <MenuItem value={20}>Medium</MenuItem>
+              <MenuItem value={30}>High</MenuItem>
+            </Select>
+          </FormControl>
         </Grid>
         <Grid size={6}>
           <CustomTextField
@@ -185,6 +306,7 @@ const FirstComponent = ({ formData, handleInputChange }) => {
             onChange={(e) => handleInputChange("location", e.target.value)}
           />
         </Grid>
+
         <Grid size={4}>
           <FormControl fullWidth size="small" sx={{ minHeight: "20px" }}>
             <InputLabel
@@ -256,6 +378,9 @@ const FirstComponent = ({ formData, handleInputChange }) => {
           </FormControl>
         </Grid>
         <Grid size={4}>
+          <CustomTextField type="color" label='color' fullWidth onChange={(e)=>console.log(e.target.value)}/>
+        </Grid>
+        {/* <Grid size={3}>
           <Button
             variant="contained"
             size="small"
@@ -263,9 +388,9 @@ const FirstComponent = ({ formData, handleInputChange }) => {
             fullWidth
           >
             {" "}
-            Schedule for ...
+            Schedule for
           </Button>
-        </Grid>
+        </Grid> */}
       </Grid>
 
       <FormControlLabel

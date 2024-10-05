@@ -1,7 +1,7 @@
 import React from "react";
 import "@mobiscroll/react/dist/css/mobiscroll.min.css";
 import { Input, Select, Textarea } from "@mobiscroll/react";
-import { Box, Button, IconButton, Tab, Tabs, Typography } from "@mui/material";
+import { Box, Button, IconButton, Tab, Tabs, TextField, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { useState } from "react";
 import FirstComponent from "./FirstComponent";
@@ -27,7 +27,7 @@ function TabPanel(props) {
   );
 }
 
-const EventForm = ({ myEvents,setEvents, setOpen, onClose }) => {
+const EventForm = ({ myEvents,setEvents, setOpen, onClose,clickedEvent }) => {
   const theme = useTheme();
   const [value, setValue] = useState(0);
   const [textvalue, setTextValue] = useState("");
@@ -38,8 +38,9 @@ const EventForm = ({ myEvents,setEvents, setOpen, onClose }) => {
     endTime: "",
     duration: "",
     associateWith: "",
-    regarding: "",
+    Event_title: "",
     resource: 0,
+    scheduleFor:'',
     location: "",
     priority: "",
     ringAlarm: "",
@@ -146,12 +147,14 @@ const EventForm = ({ myEvents,setEvents, setOpen, onClose }) => {
       </TabPanel>
       <TabPanel value={value} index={1}>
         {/* <SecondComponent /> */}
-        <ReactQuill
+        <Typography variant="h6">Description</Typography>
+        {/* <ReactQuill
           theme="snow"
           style={{ height: 250, marginBottom: 80 }}
           value={formData.quillContent}
           onChange={(content) => handleInputChange("quillContent", content)}
-        />
+        /> */}
+        <TextField multiline rows={10} fullWidth onChange={(content) => handleInputChange("quillContent", content)}/>
         <Box display="flex" justifyContent="space-between" mt={2}>
           <Button
             size="small"
