@@ -41,6 +41,7 @@ const EventForm = ({ myEvents,setEvents, setOpen, onClose,clickedEvent }) => {
     Event_title: "",
     resource: 0,
     scheduleFor:'',
+    scheduleWith:[],
     location: "",
     priority: "",
     ringAlarm: "",
@@ -66,8 +67,15 @@ const EventForm = ({ myEvents,setEvents, setOpen, onClose,clickedEvent }) => {
   };
 
   const handleInputChange = (field, value) => {
-    if (field === "resources") {
+    if (field === "resource") {
       value = parseInt(value, 10); // Convert the input to an integer
+    }
+
+    if(field === "scheduleWith"){
+      setFormData((prev) => ({
+        ...prev,
+        [field]: Array.isArray(value) ? [...value] : value,  // Spread array values for multiple selections
+      }));
     }
     setFormData((prevState) => ({
       ...prevState,

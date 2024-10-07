@@ -7,14 +7,15 @@ const CustomTextField = ({ onChange, value, ...props }) => {
       variant="outlined"
       size="small"
       fullWidth
+      autoComplete='off'
       value={value}
       onChange={onChange}
-      {...props} // Spread any other props to maintain flexibility
+      {...props} 
       sx={{
         '& .MuiOutlinedInput-root': {
-          padding: '2px', // Custom padding
+          padding: '2px', 
           '& input': {
-            padding: '0px 10px', // Inner input padding
+            padding: '0px 10px',
           },
         },
       }}

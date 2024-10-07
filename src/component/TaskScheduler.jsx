@@ -74,8 +74,8 @@ const TaskScheduler = () => {
   const [myEvents, setEvents] = useState([
     {
       id: 'job1',
-      start: '2024-10-05T14:00',
-      end: '2024-10-05T16:00',
+      start: '2024-10-07T14:00',
+      end: '2024-10-07T16:00',
       resource: 1,
       title: 'Myla Bennett',
       job: 'Wisdom tooth removal',
@@ -83,8 +83,8 @@ const TaskScheduler = () => {
     },
     {
       id: 'job2',
-      start: '2024-10-05T17:00',
-      end: '2024-10-05T18:30',
+      start: '2024-10-07T17:00',
+      end: '2024-10-07T18:30',
       resource: 1,
       title: 'Beatrix Foley',
       job: 'Braces',
@@ -92,8 +92,8 @@ const TaskScheduler = () => {
     },
     {
       id: 'job3',
-      start: '2024-10-05T08:00',
-      end: '2024-10-05T09:30',
+      start: '2024-10-07T08:00',
+      end: '2024-10-07T09:30',
       resource: 3,
       title: 'Frank Watson',
       job: 'Teeth whitening',
@@ -101,8 +101,8 @@ const TaskScheduler = () => {
     },
     {
       id: 'job4',
-      start: '2024-10-05T10:00',
-      end: '2024-10-05T12:30',
+      start: '2024-10-07T10:00',
+      end: '2024-10-07T12:30',
       resource: 3,
       title: 'Jaime Joyce',
       job: 'Root canal treatment',
@@ -110,8 +110,8 @@ const TaskScheduler = () => {
     },
     {
       id: 'job5',
-      start: '2024-10-05T13:00',
-      end: '2024-10-05T14:00',
+      start: '2024-10-07T13:00',
+      end: '2024-10-07T14:00',
       resource: 3,
       title: 'Corey Shepard',
       job: 'Tooth extraction',
@@ -119,8 +119,8 @@ const TaskScheduler = () => {
     },
     {
       id: 'job6',
-      start: '2024-10-05T14:00',
-      end: '2024-10-05T16:00',
+      start: '2024-10-07T14:00',
+      end: '2024-10-07T16:00',
       resource: 4,
       title: 'Callie Leonard',
       job: 'Crown and bridge',
@@ -128,8 +128,8 @@ const TaskScheduler = () => {
     },
     {
       id: 'job7',
-      start: '2024-10-05T17:00',
-      end: '2024-10-05T18:00',
+      start: '2024-10-07T17:00',
+      end: '2024-10-07T18:00',
       resource: 4,
       title: 'Harley Thomson',
       job: 'Tartar removal',
@@ -137,8 +137,8 @@ const TaskScheduler = () => {
     },
     {
       id: 'job8',
-      start: '2024-10-05T09:00',
-      end: '2024-10-05T11:00',
+      start: '2024-10-07T09:00',
+      end: '2024-10-07T11:00',
       resource: 6,
       title: 'Ricky Welch',
       job: 'Wisdom tooth removal',
@@ -512,35 +512,7 @@ const TaskScheduler = () => {
             onClose={handleCloseToast}
           />
         </div>
-        {/* <div
-          className="mbsc-col-sm-0 docs-appointment-cont"
-          //   ref={setDropElm}
-          style={{ backgroundColor: contBg }}
-        >
-          <Dropcontainer
-            onItemDrop={handleItemDrop}
-            onItemDragEnter={handleItemDragEnter}
-            onItemDragLeave={handleItemDragLeave}
-            element={dropCont}
-          >
-            <div className="mbsc-form-group-title">Unscheduled appointments</div>
-            {appointments.map((app) => (
-              <Appointment key={app.id} data={app} />
-            ))}
-          </Dropcontainer>
-          <Datepicker
-            controls={["calendar"]}
-            calendarType="month"
-            display="bottom"
-            calendarScroll={"vertical"}
-            pages={4}
-            maxHeight={"400px"}
-            maxWidth={"1000px"}
-            // isOpen={true}
-            // showOnFocus={false}
-            // showOnClick={false}
-          />
-        </div> */}
+        
         <Modal
           open={open}
           onClose={onClose}

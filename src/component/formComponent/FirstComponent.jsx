@@ -13,32 +13,79 @@ import {
 import React from "react";
 import CustomTextField from "../atom/CustomTextField";
 import { useState } from "react";
+import { Datepicker } from "@mobiscroll/react";
 
 const FirstComponent = ({ formData, handleInputChange }) => {
   const [activityType, setActivityType] = useState([
-    "Meeting",
-    "Todo",
-    "Appointment",
-    "Boardroom",
-    "Call Billing",
-    "Email Billing",
-    "Initial Consultation",
-    "Call",
-    "Mail",
-    "Meeting Billing",
-    "Personal Activity",
-    "Room 1",
-    "Room 2",
-    "Room 3",
-    "Todo Billing",
-    "Vacation",
+    { type: "meeting", resource: 1 },
+    { type: "todo", resource: 2 },
+    { type: "appointment", resource: 3 },
+    { type: "boardroom", resource: 4 },
+    { type: "call_billing", resource: 5 },
+    { type: "email_billing", resource: 6 },
+    { type: "initial_consultation", resource: 7 },
+    { type: "call", resource: 8 },
+    { type: "mail", resource: 9 },
+    { type: "meeting_billing", resource: 10 },
+    { type: "personal_activity", resource: 11 },
+    { type: "room_1", resource: 12 },
+    { type: "room_2", resource: 13 },
+    { type: "room_3", resource: 14 },
+    { type: "todo_billing", resource: 15 },
+    { type: "vacation", resource: 16 },
   ]);
+  const [associateWith, setAssociateWith] = useState([
+    "mark",
+    "tony",
+    "mahadi",
+    "fahim",
+  ]);
+  const [openDatepicker, setOpenDatepicker] = useState(false);
 
-  const [associateWith,setAssociateWith] = useState([])
+  const handleActivityChange = (event) => {
+    const selectedType = event.target.value;
+    const selectedActivity = activityType.find(
+      (item) => item.type === selectedType
+    );
+
+    if (selectedActivity) {
+      // Update both the activity type and the resource
+      handleInputChange("title", selectedActivity.type);
+      handleInputChange("resource", selectedActivity.resource);
+    }
+  };
+
+  const customInputComponent = ({ field }) => {
+    return (
+      <>
+        {field === "Start Time" ? (
+          <CustomTextField
+            fullWidth
+            size="small"
+            placeholder='Start Time'
+            variant="outlined"
+            value={formData.start}
+            onClick={() => setOpenDatepicker(true)}
+            // onChange={(e) => handleInputChange("startTime", e.target.value)}
+          />
+        ) : (
+          <CustomTextField
+            fullWidth
+            size="small"
+            placeholder="End Time"
+            variant="outlined"
+            value={formData.end}
+            onClick={() => setOpenDatepicker(true)}
+            // onChange={(e) => handleInputChange("startTime", e.target.value)}
+          />
+        )}
+      </>
+    );
+  };
   return (
     <Box>
       <Grid container spacing={2} sx={{ mt: 2 }}>
-      <Grid size={12}>
+        <Grid size={12}>
           <CustomTextField
             fullWidth
             size="small"
@@ -63,9 +110,7 @@ const FirstComponent = ({ formData, handleInputChange }) => {
               label="Activity type"
               fullWidth
               value={formData.title}
-              onChange={(e) =>
-                handleInputChange("title", e.target.value)
-              }
+              onChange={handleActivityChange}
               MenuProps={{
                 //   disablePortal: true,  // This ensures the dropdown is not restricted to the modal's container
                 PaperProps: {
@@ -89,8 +134,8 @@ const FirstComponent = ({ formData, handleInputChange }) => {
               }}
             >
               {activityType.map((item, index) => (
-                <MenuItem value={item} key={index}>
-                  {item}
+                <MenuItem value={item.type} key={index}>
+                  {item.type}
                 </MenuItem>
               ))}
               {/* <MenuItem value="">
@@ -102,24 +147,60 @@ const FirstComponent = ({ formData, handleInputChange }) => {
             </Select>
           </FormControl>
         </Grid>
+
         <Grid size={4}>
-          <CustomTextField
+          {/* <CustomTextField
             fullWidth
             size="small"
             placeholder="Start Time"
             variant="outlined"
             value={formData.startTime}
+            onClick={() => setOpenDatepicker(true)}
             onChange={(e) => handleInputChange("startTime", e.target.value)}
+          /> */}
+          <Datepicker
+            controls={["datetime"]}
+            calendarType="month"
+            display="center"
+            calendarScroll={"vertical"}
+            pages={3}
+            inputComponent={() => customInputComponent("Start Time")}
+            onClose={() => setOpenDatepicker(false)}
+            onChange={(e) => handleInputChange("start", e.value)}
+            // className="mbsc-textfield"
+            // inputProps={props}
+            // maxHeight={"400px"}
+            // maxWidth={"1000px"}
+            isOpen={openDatepicker}
+            // showOnFocus={false}
+            // showOnClick={false}
           />
         </Grid>
         <Grid size={4}>
-          <CustomTextField
+          {/* <CustomTextField
             fullWidth
             size="small"
             placeholder="End Time"
             variant="outlined"
             value={formData.endTime}
             onChange={(e) => handleInputChange("endTime", e.target.value)}
+          /> */}
+          <Datepicker
+            controls={["datetime"]}
+            calendarType="month"
+            display="center"
+            calendarScroll={"vertical"}
+            pages={3}
+            inputComponent={() => customInputComponent("End Time")}
+            onClose={() => setOpenDatepicker(false)}
+            onChange={(e) => handleInputChange("end", e.value)}
+            // className="mbsc-textfield"
+            // inputProps={props}
+            // maxHeight={"400px"}
+            // maxWidth={"1000px"}
+            isOpen={openDatepicker}
+            // showOnFocus={false}
+            // showOnClick={false}
           />
         </Grid>
         <Grid size={4}>
@@ -157,8 +238,9 @@ const FirstComponent = ({ formData, handleInputChange }) => {
             </Select>
           </FormControl>
         </Grid>
+
         <Grid size={12}>
-        <FormControl fullWidth size="small">
+          <FormControl fullWidth size="small">
             <InputLabel
               id="demo-simple-select-standard-label"
               sx={{ top: "-5px" }}
@@ -170,7 +252,7 @@ const FirstComponent = ({ formData, handleInputChange }) => {
               id="demo-simple-select-standard"
               label="Associate with"
               fullWidth
-              value={formData.title}
+              value={formData.associateWith}
               onChange={(e) =>
                 handleInputChange("associateWith", e.target.value)
               }
@@ -196,7 +278,7 @@ const FirstComponent = ({ formData, handleInputChange }) => {
                 },
               }}
             >
-              {activityType.map((item, index) => (
+              {associateWith.map((item, index) => (
                 <MenuItem value={item} key={index}>
                   {item}
                 </MenuItem>
@@ -212,8 +294,9 @@ const FirstComponent = ({ formData, handleInputChange }) => {
             onChange={(e) => handleInputChange("associateWith", e.target.value)}
           /> */}
         </Grid>
+
         <Grid size={12}>
-        <FormControl fullWidth size="small">
+          <FormControl fullWidth size="small">
             <InputLabel
               id="demo-simple-select-standard-label"
               sx={{ top: "-5px" }}
@@ -226,12 +309,11 @@ const FirstComponent = ({ formData, handleInputChange }) => {
               label="Schedule with"
               fullWidth
               multiple
-              value={formData.title}
-              onChange={(e) =>
-                handleInputChange("ScheduleWith", e.target.value)
+              value={formData.scheduleWith} // Use formData.scheduleWith, which is an array
+              onChange={
+                (e) => handleInputChange("scheduleWith", e.target.value) // Ensure this updates as an array
               }
               MenuProps={{
-                //   disablePortal: true,  // This ensures the dropdown is not restricted to the modal's container
                 PaperProps: {
                   style: {
                     zIndex: 1300, // Increase this if necessary, depending on the z-index of your popup
@@ -243,7 +325,6 @@ const FirstComponent = ({ formData, handleInputChange }) => {
                   padding: "3px 10px", // Adjust the padding to shrink the Select content
                 },
                 "& .MuiOutlinedInput-root": {
-                  // height: '40px', // Set a consistent height
                   padding: 0, // Ensure no extra padding
                 },
                 "& .MuiInputBase-input": {
@@ -252,7 +333,7 @@ const FirstComponent = ({ formData, handleInputChange }) => {
                 },
               }}
             >
-              {activityType.map((item, index) => (
+              {associateWith.map((item, index) => (
                 <MenuItem value={item} key={index}>
                   {item}
                 </MenuItem>
@@ -260,7 +341,7 @@ const FirstComponent = ({ formData, handleInputChange }) => {
             </Select>
           </FormControl>
         </Grid>
-        
+
         <Grid size={6}>
           <FormControl fullWidth size="small" sx={{ minHeight: "20px" }}>
             <InputLabel
@@ -378,7 +459,13 @@ const FirstComponent = ({ formData, handleInputChange }) => {
           </FormControl>
         </Grid>
         <Grid size={4}>
-          <CustomTextField type="color" label='color' fullWidth onChange={(e)=>console.log(e.target.value)}/>
+          <CustomTextField
+            type="color"
+            label="color"
+            fullWidth
+            value={formData.color}
+            onChange={(e) => handleInputChange("color", e.target.value)}
+          />
         </Grid>
         {/* <Grid size={3}>
           <Button
