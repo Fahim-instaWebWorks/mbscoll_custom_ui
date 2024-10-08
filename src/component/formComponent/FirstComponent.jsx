@@ -16,6 +16,8 @@ import { useState } from "react";
 import { Datepicker } from "@mobiscroll/react";
 
 const FirstComponent = ({ formData, handleInputChange }) => {
+  const [openStartDatepicker, setOpenStartDatepicker] = useState(false);
+  const [openEndDatepicker, setOpenEndDatepicker] = useState(false);
   const [activityType, setActivityType] = useState([
     { type: "meeting", resource: 1 },
     { type: "todo", resource: 2 },
@@ -55,33 +57,19 @@ const FirstComponent = ({ formData, handleInputChange }) => {
     }
   };
 
-  const customInputComponent = ({ field }) => {
+  const customInputComponent = (field, placeholder, openDatepickerState) => {
     return (
-      <>
-        {field === "Start Time" ? (
-          <CustomTextField
-            fullWidth
-            size="small"
-            placeholder='Start Time'
-            variant="outlined"
-            value={formData.start}
-            onClick={() => setOpenDatepicker(true)}
-            // onChange={(e) => handleInputChange("startTime", e.target.value)}
-          />
-        ) : (
-          <CustomTextField
-            fullWidth
-            size="small"
-            placeholder="End Time"
-            variant="outlined"
-            value={formData.end}
-            onClick={() => setOpenDatepicker(true)}
-            // onChange={(e) => handleInputChange("startTime", e.target.value)}
-          />
-        )}
-      </>
+      <CustomTextField
+        fullWidth
+        size="small"
+        placeholder={placeholder}
+        variant="outlined"
+        value={formData[field]}
+        onClick={() => openDatepickerState(true)}
+      />
     );
   };
+
   return (
     <Box>
       <Grid container spacing={2} sx={{ mt: 2 }}>
@@ -149,58 +137,29 @@ const FirstComponent = ({ formData, handleInputChange }) => {
         </Grid>
 
         <Grid size={4}>
-          {/* <CustomTextField
-            fullWidth
-            size="small"
-            placeholder="Start Time"
-            variant="outlined"
-            value={formData.startTime}
-            onClick={() => setOpenDatepicker(true)}
-            onChange={(e) => handleInputChange("startTime", e.target.value)}
-          /> */}
-          <Datepicker
+          
+        <Datepicker
             controls={["datetime"]}
-            calendarType="month"
             display="center"
-            calendarScroll={"vertical"}
-            pages={3}
-            inputComponent={() => customInputComponent("Start Time")}
-            onClose={() => setOpenDatepicker(false)}
+            inputComponent={() =>
+              customInputComponent("start", "Start Time", setOpenStartDatepicker)
+            }
+            onClose={() => setOpenStartDatepicker(false)}
             onChange={(e) => handleInputChange("start", e.value)}
-            // className="mbsc-textfield"
-            // inputProps={props}
-            // maxHeight={"400px"}
-            // maxWidth={"1000px"}
-            isOpen={openDatepicker}
-            // showOnFocus={false}
-            // showOnClick={false}
+            isOpen={openStartDatepicker}
           />
         </Grid>
         <Grid size={4}>
-          {/* <CustomTextField
-            fullWidth
-            size="small"
-            placeholder="End Time"
-            variant="outlined"
-            value={formData.endTime}
-            onChange={(e) => handleInputChange("endTime", e.target.value)}
-          /> */}
-          <Datepicker
+          
+        <Datepicker
             controls={["datetime"]}
-            calendarType="month"
             display="center"
-            calendarScroll={"vertical"}
-            pages={3}
-            inputComponent={() => customInputComponent("End Time")}
-            onClose={() => setOpenDatepicker(false)}
+            inputComponent={() =>
+              customInputComponent("end", "End Time", setOpenEndDatepicker)
+            }
+            onClose={() => setOpenEndDatepicker(false)}
             onChange={(e) => handleInputChange("end", e.value)}
-            // className="mbsc-textfield"
-            // inputProps={props}
-            // maxHeight={"400px"}
-            // maxWidth={"1000px"}
-            isOpen={openDatepicker}
-            // showOnFocus={false}
-            // showOnClick={false}
+            isOpen={openEndDatepicker}
           />
         </Grid>
         <Grid size={4}>
@@ -467,17 +426,6 @@ const FirstComponent = ({ formData, handleInputChange }) => {
             onChange={(e) => handleInputChange("color", e.target.value)}
           />
         </Grid>
-        {/* <Grid size={3}>
-          <Button
-            variant="contained"
-            size="small"
-            sx={{ bgcolor: "gray" }}
-            fullWidth
-          >
-            {" "}
-            Schedule for
-          </Button>
-        </Grid> */}
       </Grid>
 
       <FormControlLabel
