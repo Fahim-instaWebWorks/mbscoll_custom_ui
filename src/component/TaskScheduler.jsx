@@ -197,7 +197,7 @@ const TaskScheduler = () => {
     schedule: {
       type: "day",
       startTime: "08:00",
-      endTime: "20:00",
+      endTime: "24:00",
       allDay: false,
     },
   });
@@ -230,7 +230,7 @@ const TaskScheduler = () => {
             startDay: 1,
             endDay: 5,
             startTime: "08:00",
-            endTime: "17:00",
+            endTime: "24:00",
           },
         };
         break;
@@ -240,7 +240,7 @@ const TaskScheduler = () => {
             type: "day",
             allDay: false,
             startTime: "08:00",
-            endTime: "17:00",
+            endTime: "24:00",
           },
         };
         break;
@@ -249,7 +249,7 @@ const TaskScheduler = () => {
           schedule: {
             type: "day",
             startTime: "08:00",
-            endTime: "20:00",
+            endTime: "24:00",
             allDay: false,
           },
         };
@@ -346,9 +346,9 @@ const TaskScheduler = () => {
     []
   );
 
-  const setDropElm = useCallback((elm) => {
-    setDropCont(elm);
-  }, []);
+  // const setDropElm = useCallback((elm) => {
+  //   setDropCont(elm);
+  // }, []);
 
   const handleEventCreate = useCallback((args) => {
     const event = args.event;
@@ -421,12 +421,12 @@ const TaskScheduler = () => {
 
   const customWithNavButtons = useCallback(() => {
     const props = { placeholder: "Select date...",inputStyle:'box' };
-    const show = () => {
-      setOpenPicker(true);
-    };
-    const handleClose = () => {
-      setOpenPicker(false);
-    };
+    // const show = () => {
+    //   setOpenPicker(true);
+    // };
+    // const handleClose = () => {
+    //   setOpenPicker(false);
+    // };
     return (
       <>
         <CalendarNav className="cal-header-nav" />
@@ -487,7 +487,7 @@ const TaskScheduler = () => {
             data={myEvents}
             view={myView}
             resources={meetings}
-            invalid={myInvalid}
+            // invalid={myInvalid}
             dragToMove={true}
             dragToCreate={true}
             eventOverlap={false}

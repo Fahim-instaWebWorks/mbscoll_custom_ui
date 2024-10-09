@@ -139,7 +139,7 @@ const FirstComponent = ({ formData, handleInputChange }) => {
         <Grid size={4}>
           
         <Datepicker
-            controls={["datetime"]}
+            controls={["calendar","time"]}
             display="center"
             inputComponent={() =>
               customInputComponent("start", "Start Time", setOpenStartDatepicker)
@@ -152,7 +152,7 @@ const FirstComponent = ({ formData, handleInputChange }) => {
         <Grid size={4}>
           
         <Datepicker
-            controls={["datetime"]}
+            controls={["calendar","time"]}
             display="center"
             inputComponent={() =>
               customInputComponent("end", "End Time", setOpenEndDatepicker)

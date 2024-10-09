@@ -109,7 +109,7 @@ const EventForm = ({ myEvents,setEvents, setOpen, onClose,clickedEvent }) => {
         <IconButton
           aria-label="close"
           onClick={() => {
-            onClose;
+            onClose();
             setOpen(false);
           }}
           sx={{
